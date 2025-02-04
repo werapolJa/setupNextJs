@@ -19,6 +19,7 @@ type Pet = {
 
 export default function Home() {
   const [pet, setPet] = useState<Pet[]>([]);
+  console.log("pet", pet);
   useEffect(() => {
     DataPet();
   }, []);
@@ -27,8 +28,10 @@ export default function Home() {
     try {
       const res = await axios("/api/pet");
       const data = res.data;
-      setPet(data);
       console.log(data);
+
+      setPet(data);
+      console.log("resdata", data);
     } catch (error) {
       console.log(error);
     }
