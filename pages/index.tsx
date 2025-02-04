@@ -25,7 +25,7 @@ export default function Home() {
 
   const DataPet = async () => {
     try {
-      const res = await axios("/api/pet");
+      const res = await axios.get("/api/pet");
       const data = res.data;
       setPet(data);
       console.log(data);
