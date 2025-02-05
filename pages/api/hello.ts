@@ -1,7 +1,8 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import connectionPool from "@/utils/db";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Pet = {
+type User = {
   user_id: number;
   full_name: string;
   phone: string;
@@ -14,30 +15,15 @@ type Pet = {
 };
 
 type Data = {
-  data?: Pet[];
-  error?: string;
+  data?: User[];
 };
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method === "OPTIONS") {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    res.status(200).end();
-    return;
-  }
   if (req.method === "GET") {
-    try {
-      const result = await connectionPool.query("select * from pet");
-      res.status(200).json({ data: result.rows });
-    } catch (error) {
-      console.error("Error fetching pets:", error);
-      res.status(500).json({ error: "Failed to fetch pets" });
-    }
-  } else {
-    res.status(405).json({ error: "Method Not Allowed" });
+    const result = await connectionPool.query("select * from users");
+    res.status(200).json({ data: result.rows });
   }
 }
